@@ -12,28 +12,34 @@ class FirebaseService {
     }
 
     try {
-      const serviceAccountPath = config.firebase?.serviceAccountPath ||
-        path.join(__dirname, '../../serviceAccountKey.json');
+      let serviceAccountPath = config.firebase?.serviceAccountPath || '';
+
+      if (serviceAccountPath && !path.isAbsolute(serviceAccountPath)) {
+        serviceAccountPath = path.join(process.cwd(), serviceAccountPath);
+      }
+
+      if (!serviceAccountPath) {
+        serviceAccountPath = path.join(process.cwd(), 'serviceAccountKey.json');
+      }
 
       if (fs.existsSync(serviceAccountPath)) {
-        const serviceAccount = require(serviceAccountPath);
+        const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
         admin.initializeApp({
           credential: admin.credential.cert(serviceAccount),
         });
+        this.initialized = true;
       } else if (config.firebase?.projectId && config.firebase?.clientEmail && config.firebase?.privateKey) {
         admin.initializeApp({
           credential: admin.credential.cert({
             projectId: config.firebase.projectId,
             clientEmail: config.firebase.clientEmail,
-            privateKey: config.firebase.privateKey?.replace(/\\n/g, '\n'),
+            privateKey: config.firebase.privateKey.replace(/\\n/g, '\n'),
           }),
         });
-      } else {
-        return;
+        this.initialized = true;
       }
-
-      this.initialized = true;
     } catch (error) {
+      console.error('Firebase initialization error:', error);
     }
   }
 
