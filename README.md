@@ -17,7 +17,17 @@ examen/
 
 ## Instalación y Ejecución
 
-### Backend
+### 1. Base de Datos MySQL
+
+Crear la base de datos antes de ejecutar el backend:
+
+```sql
+CREATE DATABASE examen_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+Las tablas se crean automáticamente al iniciar el servidor (Sequelize sync).
+
+### 2. Backend
 ```bash
 cd examen-app-backend
 npm install
@@ -26,7 +36,7 @@ npm run dev
 # http://localhost:3000
 ```
 
-### Frontend Angular
+### 3. Frontend Angular
 ```bash
 cd examen-app-frontend
 npm install
@@ -34,7 +44,7 @@ ng serve
 # http://localhost:4200
 ```
 
-### Ionic
+### 4. Ionic (App Móvil)
 ```bash
 cd examen-app
 npm install
