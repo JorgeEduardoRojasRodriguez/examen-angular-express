@@ -1,0 +1,58 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 8h8v24H8V8z" fill="#1a1a2e"/>
+        <path d="M16 8l16 12-16 12V8z" fill="#1a1a2e"/>
+      </svg>
+    </div>
+
+    <div class="login-header">
+      <h1>Hola,<br>Inicia Sesión.</h1>
+      <p>Si eres nuevo / <a routerLink="/register">Crear Cuenta</a></p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="login-form">
+      @if (error()) {
+        <div class="error-message">
+          {{ error() }}
+        </div>
+      }
+
+      <div class="form-group username">
+        <input
+          type="email"
+          id="email"
+          [value]="email()"
+          (input)="updateEmail($event)"
+          placeholder="Correo electrónico"
+          [disabled]="isLoading()"
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          id="password"
+          [value]="password()"
+          (input)="updatePassword($event)"
+          placeholder="Contraseña"
+          [disabled]="isLoading()"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="btn-login"
+        [disabled]="isLoading()"
+      >
+        @if (isLoading()) {
+          <span class="spinner"></span>
+          Ingresando...
+        } @else {
+          Ingresar
+        }
+      </button>
+    </form>
+  </div>
+</div>

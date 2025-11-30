@@ -1,0 +1,60 @@
+<ion-content class="login-content" [fullscreen]="true">
+  <div class="login-container">
+    <div class="logo">
+      <div class="logo-icon"></div>
+    </div>
+
+    <div class="login-header">
+      <h1>Hola,<br>Inicia Sesión.</h1>
+      <p>Si eres nuevo / <a (click)="goToRegister()">Crear Cuenta</a></p>
+    </div>
+
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-form">
+      <div class="input-group input-username" [class.has-value]="credentials.email">
+        <ion-input
+          type="email"
+          placeholder="Correo electrónico"
+          [(ngModel)]="credentials.email"
+          name="email"
+          required
+          email
+          #emailInput="ngModel"
+        ></ion-input>
+        <ion-icon name="flash" class="input-icon-right"></ion-icon>
+      </div>
+
+      <div class="input-group input-password">
+        <ion-input
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Contraseña"
+          [(ngModel)]="credentials.password"
+          name="password"
+          required
+          minlength="6"
+          #passwordInput="ngModel"
+        ></ion-input>
+        <ion-icon
+          [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+          class="toggle-password"
+          (click)="togglePassword()"
+        ></ion-icon>
+      </div>
+
+      <div class="api-error" *ngIf="errorMessage">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        {{ errorMessage }}
+      </div>
+
+      <ion-button
+        type="submit"
+        expand="block"
+        class="login-button"
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner>
+        <span *ngIf="!isLoading">Iniciar Sesión</span>
+      </ion-button>
+
+    </form>
+  </div>
+</ion-content>

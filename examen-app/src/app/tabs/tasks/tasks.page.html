@@ -1,0 +1,82 @@
+<app-header title="Tus Tareas" [showGreeting]="true"></app-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Desliza para actualizar"
+      refreshingSpinner="crescent"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="loading-state" *ngIf="isLoading && tasks.length === 0">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando tareas...</p>
+  </div>
+
+  <div class="error-state" *ngIf="hasError && !isLoading">
+    <ion-icon name="alert-circle-outline"></ion-icon>
+    <h3>Error</h3>
+    <p>{{ errorMessage }}</p>
+    <ion-button (click)="loadTasks()" fill="outline">
+      <ion-icon name="refresh-outline" slot="start"></ion-icon>
+      Reintentar
+    </ion-button>
+  </div>
+
+  <div class="empty-state" *ngIf="isEmpty && !isLoading && !hasError">
+    <ion-icon name="clipboard-outline"></ion-icon>
+    <h3>Sin tareas</h3>
+    <p>No tienes tareas pendientes. ¡Crea una nueva!</p>
+    <ion-button (click)="openTaskModal()" fill="outline">
+      <ion-icon name="add-outline" slot="start"></ion-icon>
+      Nueva Tarea
+    </ion-button>
+  </div>
+
+  <ion-list *ngIf="!isEmpty && !isLoading && !hasError" class="task-list">
+    <ion-item-sliding *ngFor="let task of tasks">
+      <ion-item (click)="openTaskModal(task)" [class.completed]="isTaskCompleted(task)">
+        <ion-checkbox
+          slot="start"
+          [checked]="isTaskCompleted(task)"
+          (ionChange)="toggleTaskComplete(task)"
+          (click)="$event.stopPropagation()"
+        ></ion-checkbox>
+        <ion-label>
+          <h2>{{ task.title }}</h2>
+          <p *ngIf="task.description">{{ task.description }}</p>
+        </ion-label>
+        <ion-icon
+          name="chevron-forward-outline"
+          slot="end"
+          color="medium"
+        ></ion-icon>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="confirmDeleteTask(task)">
+          <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-infinite-scroll
+    *ngIf="!isEmpty && !isLoading && !hasError"
+    threshold="100px"
+    (ionInfinite)="loadMoreTasks($event)"
+    [disabled]="!hasMoreData"
+  >
+    <ion-infinite-scroll-content
+      loadingSpinner="crescent"
+      loadingText="Cargando más tareas...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openTaskModal()" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,79 @@
+<app-header title="Usuarios" [showGreeting]="true"></app-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Desliza para actualizar"
+      refreshingSpinner="crescent"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="loading-state" *ngIf="isLoading && users.length === 0">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando usuarios...</p>
+  </div>
+
+  <div class="error-state" *ngIf="hasError && !isLoading">
+    <ion-icon name="alert-circle-outline"></ion-icon>
+    <h3>Error</h3>
+    <p>{{ errorMessage }}</p>
+    <ion-button (click)="loadUsers()" fill="outline">
+      <ion-icon name="refresh-outline" slot="start"></ion-icon>
+      Reintentar
+    </ion-button>
+  </div>
+
+  <div class="empty-state" *ngIf="isEmpty && !isLoading && !hasError">
+    <ion-icon name="people-outline"></ion-icon>
+    <h3>Sin usuarios</h3>
+    <p>No hay usuarios registrados.</p>
+    <ion-button (click)="openUserModal()" fill="outline">
+      <ion-icon name="add-outline" slot="start"></ion-icon>
+      Nuevo Usuario
+    </ion-button>
+  </div>
+
+  <ion-list *ngIf="!isEmpty && !isLoading && !hasError" class="user-list">
+    <ion-item-sliding *ngFor="let user of users">
+      <ion-item (click)="openUserModal(user)">
+        <ion-avatar slot="start">
+          <div class="avatar-placeholder">
+            {{ user.firstName.charAt(0) }}{{ user.lastName.charAt(0) }}
+          </div>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ getFullName(user) }}</h2>
+          <p>{{ user.email }}</p>
+        </ion-label>
+        <ion-badge slot="end" [color]="getRoleBadgeColor(user.role)">
+          {{ getRoleLabel(user.role) }}
+        </ion-badge>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="confirmDeleteUser(user)">
+          <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-infinite-scroll
+    *ngIf="!isEmpty && !isLoading && !hasError"
+    threshold="100px"
+    (ionInfinite)="loadMoreUsers($event)"
+    [disabled]="!hasMoreData"
+  >
+    <ion-infinite-scroll-content
+      loadingSpinner="crescent"
+      loadingText="Cargando más usuarios...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openUserModal()" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

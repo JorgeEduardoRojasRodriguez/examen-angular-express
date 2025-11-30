@@ -1,0 +1,53 @@
+<app-header title="Notificaciones" [showGreeting]="false"></app-header>
+
+<ion-content>
+  <div class="fcm-badge">
+    <ion-icon name="logo-firebase"></ion-icon>
+    <span>Firebase Cloud Messaging</span>
+  </div>
+
+  <div class="token-section">
+    <div class="section-header">
+      <ion-icon name="key-outline"></ion-icon>
+      <span>Token FCM</span>
+    </div>
+    <div class="token-content">
+      <div class="token-display" *ngIf="fcmToken">
+        <code>{{ fcmToken }}</code>
+      </div>
+      <div class="token-display no-token" *ngIf="!fcmToken">
+        <span>Solicitando permisos de notificaciones...</span>
+      </div>
+      <ion-button expand="block" fill="outline" size="small" (click)="copyToken()" [disabled]="!fcmToken">
+        <ion-icon name="copy-outline" slot="start"></ion-icon>
+        Copiar Token
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="log-section">
+    <div class="section-header">
+      <ion-icon name="list-outline"></ion-icon>
+      <span>Historial de Notificaciones</span>
+      <ion-button fill="clear" size="small" (click)="clearLogs()" *ngIf="notificationLogs.length > 0">
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+    <div class="log-content">
+      <div class="empty-logs" *ngIf="notificationLogs.length === 0">
+        <ion-icon name="notifications-off-outline"></ion-icon>
+        <p>No hay notificaciones recibidas</p>
+      </div>
+      <div class="notification-item" *ngFor="let log of notificationLogs">
+        <div class="notification-icon">
+          <ion-icon name="notifications"></ion-icon>
+        </div>
+        <div class="notification-info">
+          <h4>{{ log.title }}</h4>
+          <p>{{ log.body }}</p>
+          <span class="notification-time">{{ log.receivedAt | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

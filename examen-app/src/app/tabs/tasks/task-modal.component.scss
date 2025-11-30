@@ -1,0 +1,88 @@
+$primary-color: #B8324F;
+$text-dark: #1a1a1a;
+$text-muted: #888888;
+$border-color: #e5e5e5;
+
+ion-header {
+  ion-toolbar {
+    --background: #ffffff;
+    --border-color: #{$border-color};
+
+    ion-title {
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    ion-button {
+      --color: #{$text-dark};
+
+      &[color="primary"] {
+        --color: #{$primary-color};
+      }
+    }
+  }
+}
+
+.modal-content {
+  --background: #f8f9fa;
+}
+
+.form-container {
+  padding: 24px 16px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+
+  ion-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-dark;
+    margin-bottom: 8px;
+  }
+
+  ion-input,
+  ion-textarea,
+  ion-select {
+    --background: #ffffff;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    font-size: 16px;
+    --color: #{$text-dark};
+    --placeholder-color: #{$text-muted};
+  }
+
+  ion-select {
+    width: 100%;
+    max-width: 100%;
+    min-height: 48px;
+
+    &::part(text) {
+      color: $text-dark;
+    }
+
+    &::part(placeholder) {
+      color: $text-muted;
+    }
+
+    &::part(icon) {
+      color: $text-muted;
+    }
+  }
+
+  ion-textarea {
+    --padding-top: 12px;
+  }
+}
+
+.delete-button {
+  margin-top: 32px;
+  --border-radius: 8px;
+  height: 48px;
+  font-weight: 600;
+}

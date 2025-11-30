@@ -1,0 +1,67 @@
+<app-header title="Notas" [showGreeting]="true"></app-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Desliza para actualizar"
+      refreshingSpinner="crescent"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="firebase-badge">
+    <ion-icon name="server-outline"></ion-icon>
+    <span>Firebase Firestore</span>
+  </div>
+
+  <div class="loading-state" *ngIf="isLoading && notes.length === 0">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando notas...</p>
+  </div>
+
+  <div class="error-state" *ngIf="hasError && !isLoading">
+    <ion-icon name="alert-circle-outline"></ion-icon>
+    <h3>Error</h3>
+    <p>{{ errorMessage }}</p>
+    <ion-button (click)="loadNotes()" fill="outline">
+      <ion-icon name="refresh-outline" slot="start"></ion-icon>
+      Reintentar
+    </ion-button>
+  </div>
+
+  <div class="empty-state" *ngIf="isEmpty">
+    <ion-icon name="document-text-outline"></ion-icon>
+    <h3>Sin notas</h3>
+    <p>Crea tu primera nota con el botón de abajo</p>
+    <ion-button (click)="openNoteModal()" fill="outline">
+      <ion-icon name="add-outline" slot="start"></ion-icon>
+      Nueva Nota
+    </ion-button>
+  </div>
+
+  <div class="notes-grid" *ngIf="!isLoading && !hasError && notes.length > 0">
+    <div
+      *ngFor="let note of notes"
+      class="note-card"
+      [class]="getColorClass(note.color)"
+      (click)="openNoteModal(note)"
+    >
+      <div class="note-header">
+        <h3 class="note-title">{{ note.title }}</h3>
+        <ion-button fill="clear" size="small" class="delete-btn" (click)="confirmDeleteNote(note); $event.stopPropagation()">
+          <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+      <p class="note-content">{{ note.content }}</p>
+      <div class="note-footer">
+        <span class="note-date">{{ note.updatedAt | date:'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openNoteModal()" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ isEdit ? 'Editar Nota' : 'Nueva Nota' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()" [disabled]="!isFormValid()" color="primary">
+        <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="modal-content">
+  <div class="form-container">
+    <div class="input-group">
+      <ion-label>Título</ion-label>
+      <ion-input
+        type="text"
+        placeholder="Título de la nota"
+        [(ngModel)]="noteData.title"
+        required
+      ></ion-input>
+    </div>
+
+    <div class="input-group">
+      <ion-label>Contenido</ion-label>
+      <ion-textarea
+        placeholder="Escribe tu nota aquí..."
+        [(ngModel)]="noteData.content"
+        rows="6"
+      ></ion-textarea>
+    </div>
+
+    <div class="input-group">
+      <ion-label>Color</ion-label>
+      <div class="color-picker">
+        <button
+          *ngFor="let color of colors"
+          type="button"
+          class="color-option"
+          [class]="getColorClass(color)"
+          [class.selected]="noteData.color === color"
+          (click)="selectColor(color)"
+        >
+          <ion-icon *ngIf="noteData.color === color" name="checkmark"></ion-icon>
+        </button>
+      </div>
+      <span class="color-label">{{ colorLabels[noteData.color] }}</span>
+    </div>
+
+    <ion-button
+      *ngIf="isEdit"
+      expand="block"
+      color="danger"
+      fill="outline"
+      class="delete-button"
+      (click)="delete()"
+    >
+      <ion-icon name="trash-outline" slot="start"></ion-icon>
+      Eliminar Nota
+    </ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,38 @@
+$primary-color: #B8324F;
+$text-dark: #1a1a1a;
+$text-muted: #888888;
+$border-color: #e5e5e5;
+
+ion-header {
+  ion-toolbar {
+    --background: #ffffff;
+    --border-color: #{$border-color};
+    --min-height: 70px;
+
+    ion-title {
+      padding-inline: 16px;
+    }
+
+    .header-title {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .greeting {
+        font-size: 14px;
+        font-weight: 400;
+        color: $text-muted;
+      }
+
+      .subtitle {
+        font-size: 22px;
+        font-weight: 700;
+        color: $text-dark;
+      }
+    }
+
+    ion-button {
+      --color: #{$text-muted};
+    }
+  }
+}

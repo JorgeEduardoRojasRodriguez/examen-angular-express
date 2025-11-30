@@ -1,0 +1,21 @@
+$primary-color: #B8324F;
+
+ion-tab-bar {
+  --background: #ffffff;
+  --border: 1px solid #e2e8f0;
+  padding: 8px 0;
+
+  ion-tab-button {
+    --color: #718096;
+    --color-selected: #{$primary-color};
+
+    ion-icon {
+      font-size: 24px;
+    }
+
+    ion-label {
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+}

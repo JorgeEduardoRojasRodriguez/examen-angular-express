@@ -1,0 +1,129 @@
+$primary-color: #B8324F;
+$text-dark: #1a1a1a;
+$text-muted: #888888;
+$border-color: #e5e5e5;
+
+// Colores de notas
+$note-yellow: #FEF3C7;
+$note-blue: #DBEAFE;
+$note-green: #D1FAE5;
+$note-pink: #FCE7F3;
+$note-purple: #EDE9FE;
+
+ion-header {
+  ion-toolbar {
+    --background: #ffffff;
+    --border-color: #{$border-color};
+
+    ion-title {
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    ion-button {
+      --color: #{$text-dark};
+
+      &[color="primary"] {
+        --color: #{$primary-color};
+      }
+    }
+  }
+}
+
+.modal-content {
+  --background: #f8f9fa;
+}
+
+.form-container {
+  padding: 24px 16px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+
+  ion-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-dark;
+    margin-bottom: 8px;
+  }
+
+  ion-input,
+  ion-textarea {
+    --background: #ffffff;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    font-size: 16px;
+    --color: #{$text-dark};
+    --placeholder-color: #{$text-muted};
+  }
+
+  ion-textarea {
+    --padding-top: 12px;
+  }
+}
+
+.color-picker {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.color-option {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, border-color 0.2s;
+
+  ion-icon {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  &.selected {
+    border-color: $text-dark;
+    transform: scale(1.1);
+  }
+
+  &.color-yellow {
+    background-color: $note-yellow;
+  }
+
+  &.color-blue {
+    background-color: $note-blue;
+  }
+
+  &.color-green {
+    background-color: $note-green;
+  }
+
+  &.color-pink {
+    background-color: $note-pink;
+  }
+
+  &.color-purple {
+    background-color: $note-purple;
+  }
+}
+
+.color-label {
+  font-size: 12px;
+  color: $text-muted;
+}
+
+.delete-button {
+  margin-top: 32px;
+  --border-radius: 8px;
+  height: 48px;
+  font-weight: 600;
+}

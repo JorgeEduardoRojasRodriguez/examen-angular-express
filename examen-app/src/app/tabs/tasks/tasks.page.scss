@@ -1,0 +1,140 @@
+$primary-color: #B8324F;
+$text-dark: #1a1a1a;
+$text-muted: #888888;
+$success-color: #10b981;
+$border-color: #e5e5e5;
+
+ion-content {
+  --background: #f8f9fa;
+}
+
+// Estados de la UI
+.loading-state,
+.error-state,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60%;
+  padding: 32px;
+  text-align: center;
+
+  ion-icon {
+    font-size: 64px;
+    color: $text-muted;
+    margin-bottom: 16px;
+  }
+
+  ion-spinner {
+    width: 48px;
+    height: 48px;
+    color: $primary-color;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: $text-dark;
+    margin: 0 0 8px;
+  }
+
+  p {
+    font-size: 14px;
+    color: $text-muted;
+    margin: 0 0 24px;
+  }
+
+  ion-button {
+    --border-radius: 8px;
+    --color: #{$primary-color};
+    --border-color: #{$primary-color};
+  }
+}
+
+.error-state {
+  ion-icon {
+    color: #ef4444;
+  }
+}
+
+// Lista de tareas
+.task-list {
+  background: transparent;
+  padding: 8px 16px 100px;
+
+  ion-item-sliding {
+    margin-bottom: 8px;
+  }
+
+  ion-item {
+    --background: #ffffff;
+    --border-radius: 12px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --inner-padding-end: 8px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    &.completed {
+      ion-label {
+        h2, p {
+          text-decoration: line-through;
+          color: $text-muted;
+        }
+      }
+    }
+
+    ion-checkbox {
+      --size: 24px;
+      --border-radius: 6px;
+      --border-color: #{$border-color};
+      --border-color-checked: #{$success-color};
+      --background-checked: #{$success-color};
+      --checkmark-color: #ffffff;
+      margin-right: 12px;
+    }
+
+    ion-label {
+      h2 {
+        font-size: 16px;
+        font-weight: 600;
+        color: $text-dark;
+        margin-bottom: 4px;
+      }
+
+      p {
+        font-size: 14px;
+        color: $text-muted;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    ion-icon[slot="end"] {
+      font-size: 18px;
+    }
+  }
+
+  ion-item-option {
+    --border-radius: 0 12px 12px 0;
+  }
+}
+
+// FAB
+ion-fab-button {
+  --background: #{$primary-color};
+  --background-activated: #9a2a42;
+  --box-shadow: 0 4px 12px rgba($primary-color, 0.4);
+
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+// Infinite scroll
+ion-infinite-scroll-content {
+  padding: 16px;
+}

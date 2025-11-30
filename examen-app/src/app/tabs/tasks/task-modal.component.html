@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ isEdit ? 'Editar Tarea' : 'Nueva Tarea' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()" [disabled]="!taskData.title?.trim()" color="primary">
+        <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="modal-content">
+  <div class="form-container">
+    <div class="input-group">
+      <ion-label>Título</ion-label>
+      <ion-input
+        type="text"
+        placeholder="Escribe el título de la tarea"
+        [(ngModel)]="taskData.title"
+        required
+      ></ion-input>
+    </div>
+
+    <div class="input-group">
+      <ion-label>Descripción</ion-label>
+      <ion-textarea
+        placeholder="Escribe una descripción (opcional)"
+        [(ngModel)]="taskData.description"
+        rows="4"
+      ></ion-textarea>
+    </div>
+
+    <div class="input-group">
+      <ion-label>Prioridad</ion-label>
+      <ion-select [(ngModel)]="taskData.priority" interface="popover" placeholder="Seleccionar prioridad">
+        <ion-select-option value="low">Baja</ion-select-option>
+        <ion-select-option value="medium">Media</ion-select-option>
+        <ion-select-option value="high">Alta</ion-select-option>
+      </ion-select>
+    </div>
+
+    <div class="input-group">
+      <ion-label>Estado</ion-label>
+      <ion-select [(ngModel)]="taskData.status" interface="popover" placeholder="Seleccionar estado">
+        <ion-select-option value="pending">Pendiente</ion-select-option>
+        <ion-select-option value="in_progress">En Progreso</ion-select-option>
+        <ion-select-option value="completed">Completada</ion-select-option>
+      </ion-select>
+    </div>
+
+    <ion-button
+      *ngIf="isEdit"
+      expand="block"
+      color="danger"
+      fill="outline"
+      class="delete-button"
+      (click)="delete()"
+    >
+      <ion-icon name="trash-outline" slot="start"></ion-icon>
+      Eliminar Tarea
+    </ion-button>
+  </div>
+</ion-content>

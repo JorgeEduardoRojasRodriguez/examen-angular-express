@@ -1,0 +1,99 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 8h8v24H8V8z" fill="#1a1a2e"/>
+        <path d="M16 8l16 12-16 12V8z" fill="#1a1a2e"/>
+      </svg>
+    </div>
+
+    <div class="register-header">
+      <h1>Crear<br>Cuenta.</h1>
+      <p>¿Ya tienes cuenta? / <a routerLink="/login">Iniciar Sesión</a></p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="register-form">
+      @if (error()) {
+        <div class="error-message">
+          {{ error() }}
+        </div>
+      }
+
+      @if (success()) {
+        <div class="success-message">
+          {{ success() }}
+        </div>
+      }
+
+      <div class="form-row">
+        <div class="form-group">
+          <input
+            type="text"
+            id="firstName"
+            [value]="firstName()"
+            (input)="updateField('firstName', $event)"
+            placeholder="Nombre"
+            [disabled]="isLoading()"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            id="lastName"
+            [value]="lastName()"
+            (input)="updateField('lastName', $event)"
+            placeholder="Apellido"
+            [disabled]="isLoading()"
+          />
+        </div>
+      </div>
+
+      <div class="form-group email">
+        <input
+          type="email"
+          id="email"
+          [value]="email()"
+          (input)="updateField('email', $event)"
+          placeholder="Correo electrónico"
+          [disabled]="isLoading()"
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          id="password"
+          [value]="password()"
+          (input)="updateField('password', $event)"
+          placeholder="Contraseña"
+          [disabled]="isLoading()"
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          id="confirmPassword"
+          [value]="confirmPassword()"
+          (input)="updateField('confirmPassword', $event)"
+          placeholder="Confirmar contraseña"
+          [disabled]="isLoading()"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="btn-register"
+        [disabled]="isLoading()"
+      >
+        @if (isLoading()) {
+          <span class="spinner"></span>
+          Creando cuenta...
+        } @else {
+          Crear Cuenta
+        }
+      </button>
+    </form>
+  </div>
+</div>
